@@ -1,0 +1,7 @@
+.main-nav li {
+    cursor: pointer;
+}
+
+.main-nav li:not(:last-of-type) {
+    margin-inline-end: 1em;
+}
