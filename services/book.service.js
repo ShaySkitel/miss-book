@@ -3,6 +3,7 @@ import { utilService } from './util.service.js'
 
 export const bookService = {
     getBooks,
+    getById,
     getDefaultFilter
 }
 
@@ -22,6 +23,10 @@ function getBooks(filterBy = getDefaultFilter()){
             }
             return books
         })
+}
+
+function getById(bookId){
+    return storageService.get(STORAGE_KEY, bookId)
 }
 
 function getDefaultFilter(){
