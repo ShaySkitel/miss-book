@@ -1,12 +1,22 @@
+const { useEffect, useState } = React
+
 import { bookService } from "../services/book.service.js"
 
-const { useEffect } = React
+import { BookList } from "../cmps/book-list.jsx"
+
 
 export function BookIndex() {
 
+    const [books, setBooks] = useState([])
+
     useEffect(() => {
-        bookService.getBooks().then(console.log)
+        bookService.getBooks().then(setBooks)
     }, [])
 
-    return <h2>Hello from book index page</h2>
+    return <section className="book-index">
+        <h2>Books</h2>
+        <section className="books-container">
+            <BookList books={books}/>
+        </section>
+    </section>
 }
