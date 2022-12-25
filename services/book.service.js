@@ -17,12 +17,15 @@ function getBooks(filterBy = getDefaultFilter()){
                 const regex = new RegExp(filterBy.title, 'i')
                 books = books.filter(book => regex.test(book.title))
             }
+            if(filterBy.maxPrice) {
+                books = books.filter(book => book.listPrice.amount <= filterBy.maxPrice)
+            }
             return books
         })
 }
 
 function getDefaultFilter(){
-    return {title: ''}
+    return {title: '', maxPrice: ''}
 }
 
 function _createDemoBooks() {
@@ -34,7 +37,7 @@ function _createDemoBooks() {
                 "title": "metus hendrerit",
                 "description": "placerat nisi sodales suscipit tellus",
                 "thumbnail": "http://ca.org/books-photos/20.jpg",
-                "listPrice": { "amount": 109, "currencyCode": "EUR", "isOnSale": false }
+                "listPrice": { "amount": 48, "currencyCode": "EUR", "isOnSale": false }
             },
             {
                 "id": "BXeMG8wNskc",
@@ -48,7 +51,7 @@ function _createDemoBooks() {
                 "title": "The lord of the rings",
                 "description": "placerat nisi sodales suscipit tellus",
                 "thumbnail": "http://ca.org/books-photos/20.jpg",
-                "listPrice": { "amount": 109, "currencyCode": "EUR", "isOnSale": false }
+                "listPrice": { "amount": 299, "currencyCode": "EUR", "isOnSale": false }
             }
         ]
     }
