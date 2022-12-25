@@ -6,11 +6,11 @@ import { Home } from './views/home.jsx'
 
 export function App() {
 
-    const [page, setPage] = useState('home')
+    const [page, setPage] = useState('books')
 
     return <section className="app main-layout">
         <header className="app-header flex justify-between align-center">
-            <h1>My App</h1>
+            <h1>Miss Book</h1>
             <ul className="main-nav clean-list flex">
                 <li onClick={() => setPage('home')}>Home</li>
                 <li onClick={() => setPage('about')}>About</li>

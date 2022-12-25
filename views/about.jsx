@@ -1,3 +1,9 @@
 export function About(){
-    return <h2>Hello from about page</h2>
+    return <section className="about">
+        <h2>A little bit about our book shop</h2>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo, similique. Suscipit dolor voluptas rerum recusandae quod consequuntur ad reprehenderit animi, exercitationem molestiae illo vel sunt natus aut et doloribus quas?</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, quaerat error debitis exercitationem quod, molestiae voluptatum necessitatibus repudiandae illum atque placeat! Nemo numquam, accusamus perferendis excepturi dolorum ad quasi illum.
+        Incidunt modi mollitia quasi eligendi, error possimus totam sit voluptatibus ducimus fugit, iusto vitae nobis illum quae placeat perferendis sed hic dolorum quidem enim cumque non. Sequi mollitia fugit beatae.</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo, similique. Suscipit dolor voluptas rerum recusandae quod consequuntur ad reprehenderit animi, exercitationem molestiae illo vel sunt natus aut et doloribus quas?</p>
+    </section>
 }
