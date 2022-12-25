@@ -1,6 +1,9 @@
-export function BookPreview({book}){
+import { LongText } from "./long-text.jsx";
+
+export function BookPreview({ book }) {
     return <div>
         <h2>{book.title}</h2>
-        <h3>{book.listPrice.amount}</h3>
+        <LongText txt={book.description} length={30}/>
+        <h3>{book.listPrice.amount} {book.listPrice.currencyCode}</h3>
     </div>
 }
