@@ -25,7 +25,7 @@ export function BookDetails() {
     if (!book) return <div>Loading...</div>
     return <section className="book-details">
         {book.listPrice.isOnSale && <h2 className="green">ON SALE!</h2>}
-        <span>By {book.authors}, language {book.language}, published {book.publishedDate}</span>
+        <span>By {book.authors.join(' ')}, language {book.language}, published {book.publishedDate}</span>
 
         {currentYear - book.publishedDate > 10 && <p>Vintage</p>}
         {currentYear - book.publishedDate < 1 && <p>New</p>}
@@ -37,7 +37,7 @@ export function BookDetails() {
 
         <LongText txt={book.description} length={30}/>
 
-        <img src={book.thumbnail} alt="" />
+        <img src={book.thumbnail || 'http://coding-academy.org/books-photos/20.jpg'} alt={book.title} />
 
         <h3 className={book.listPrice.amount < 20 ? "green" : book.listPrice.amount > 150 ? "red" : ""}>price {book.listPrice.amount} {book.listPrice.currencyCode}</h3>
 

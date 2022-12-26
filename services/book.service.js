@@ -6,7 +6,8 @@ export const bookService = {
     getById,
     getDefaultFilter,
     getEmptyBook,
-    save
+    save,
+    remove
 }
 
 const STORAGE_KEY = 'booksDB'
@@ -29,6 +30,10 @@ function getBooks(filterBy = getDefaultFilter()) {
 
 function getById(bookId) {
     return storageService.get(STORAGE_KEY, bookId)
+}
+
+function remove(bookId){
+    return storageService.remove(STORAGE_KEY, bookId)
 }
 
 function save(book){

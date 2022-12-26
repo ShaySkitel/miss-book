@@ -21,8 +21,11 @@ export function BookIndex() {
         setFilterBy(filterBy)
     }
 
-    function onSelectBook(bookId) {
-        bookService.getById(bookId).then(setSelectedBook)
+    function onDeleteBook(bookId){
+        bookService.remove(bookId).then(() => {
+            const updatedBooks = books.filter(book => book.id !== bookId)
+            setBooks(updatedBooks)
+        })
     }
 
     return <section className="book-index">
@@ -35,7 +38,7 @@ export function BookIndex() {
         <button onClick={() => navigate('/book/edit')}>Add book</button>
 
         <section className="books-container">
-            <BookList books={books} onSelectBook={onSelectBook} />
+            <BookList books={books} onDeleteBook={onDeleteBook}/>
         </section>
     </section>
 }
