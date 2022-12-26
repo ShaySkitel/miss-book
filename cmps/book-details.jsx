@@ -1,11 +1,28 @@
+const {useEffect, useState} = React
+const {useParams, useNavigate} = ReactRouterDOM
+
 import { utilService } from "../services/util.service.js"
+import {bookService} from "../services/book.service.js"
+
 import { LongText } from "./long-text.jsx"
 
 
-export function BookDetails({ onGoBack, book }) {
-
+export function BookDetails() {
+    const params = useParams()
+    const navigate = useNavigate()
     const currentYear = utilService.getCurrentYear()
 
+    const [book, setBook] = useState(null)
+
+    useEffect(() => {
+        loadBook()
+    }, [])
+
+    function loadBook(){
+        bookService.getById(params.bookId).then(setBook)
+    }
+
+    if (!book) return <div>Loading...</div>
     return <section className="book-details">
         {book.listPrice.isOnSale && <h2 className="green">ON SALE!</h2>}
         <span>By {book.authors}, language {book.language}, published {book.publishedDate}</span>
@@ -24,6 +41,6 @@ export function BookDetails({ onGoBack, book }) {
 
         <h3 className={book.listPrice.amount < 20 ? "green" : book.listPrice.amount > 150 ? "red" : ""}>price {book.listPrice.amount} {book.listPrice.currencyCode}</h3>
 
-        <button onClick={onGoBack}>Go back</button>
+        <button onClick={() => navigate('/book')}>Go back</button>
     </section>
 }
