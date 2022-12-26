@@ -9,8 +9,6 @@ export function BookEdit() {
     const [book, setBook] = useState(bookService.getEmptyBook())
     const navigate = useNavigate()
 
-    console.log(book)
-
     function handleInput({ target }) {
         let { value, name: field, type } = target
         value = type === 'number' ? +value : value
@@ -51,7 +49,7 @@ export function BookEdit() {
             <input required onChange={handleInput} value={book.categories} name="categories" type="text" placeholder="Categories... (ex. Fantasy,Horror)" />
             <input required onChange={handleInput} value={book.listPrice.amount} name="amount" type="number" placeholder="Book price..." />
             <button>Save</button>
-            <button type="button">Go back</button>
+            <button onClick={() => navigate('/book')} type="button">Go back</button>
         </form>
     </section>
 }
