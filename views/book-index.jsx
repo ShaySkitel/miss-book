@@ -1,10 +1,11 @@
 const { useEffect, useState } = React
-const {useNavigate} = ReactRouterDOM
+const { useNavigate } = ReactRouterDOM
 
 import { bookService } from "../services/book.service.js"
 
 import { BookList } from "../cmps/book-list.jsx"
 import { BookFilter } from "../cmps/book-filter.jsx"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
 
 export function BookIndex() {
@@ -21,11 +22,17 @@ export function BookIndex() {
         setFilterBy(filterBy)
     }
 
-    function onDeleteBook(bookId){
-        bookService.remove(bookId).then(() => {
-            const updatedBooks = books.filter(book => book.id !== bookId)
-            setBooks(updatedBooks)
-        })
+    function onDeleteBook(bookId) {
+        bookService.remove(bookId)
+            .then(() => {
+                const updatedBooks = books.filter(book => book.id !== bookId)
+                setBooks(updatedBooks)
+                showSuccessMsg('Book deleted')
+            })
+            .catch((err) => {
+                console.log('Had error deleting book ', err)
+                showErrorMsg('Failed to delete book')
+            })
     }
 
     return <section className="book-index">
@@ -38,7 +45,7 @@ export function BookIndex() {
         <button onClick={() => navigate('/book/edit')}>Add book</button>
 
         <section className="books-container">
-            <BookList books={books} onDeleteBook={onDeleteBook}/>
+            <BookList books={books} onDeleteBook={onDeleteBook} />
         </section>
     </section>
 }

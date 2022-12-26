@@ -2,6 +2,7 @@ const { useState } = React
 const { useNavigate } = ReactRouterDOM
 
 import { bookService } from "../services/book.service.js"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
 export function BookEdit() {
 
@@ -29,9 +30,15 @@ export function BookEdit() {
 
     function onSaveBook(ev) {
         ev.preventDefault()
-        bookService.save(book).then((book) => {
-            navigate(`/book/${book.id}`)
-        })
+        bookService.save(book)
+            .then((book) => {
+                navigate(`/book/${book.id}`)
+                showSuccessMsg('Created book successfully')
+            })
+            .catch((err) => {
+                console.log('Had error creating book ', err)
+                showErrorMsg('Failed to create book')
+            })
     }
 
     return <section className="book-edit">
