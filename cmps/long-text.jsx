@@ -7,6 +7,6 @@ export function LongText({txt, length}) {
 
     return <div className="long-text">
         {isShowAll && <span>{txt}</span> || <span>{txt.slice(0 , length)}...</span>}
-        <button onClick={() => setIsShowAll((prevIsShowAll => !prevIsShowAll))}>{isShowAll ? 'Show less' : 'Show more'}</button>
+        {txt.length > length && <button onClick={() => setIsShowAll((prevIsShowAll => !prevIsShowAll))}>{isShowAll ? 'Show less' : 'Show more'}</button>}
     </div>
 }

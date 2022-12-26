@@ -1,4 +1,5 @@
 import { utilService } from "../services/util.service.js"
+import { LongText } from "./long-text.jsx"
 
 
 export function BookDetails({ onGoBack, book }) {
@@ -17,7 +18,7 @@ export function BookDetails({ onGoBack, book }) {
         {book.pageCount < 100 && <p>Light reading</p>}
         {book.pageCount > 500 && <p>Serious reading</p> || book.pageCount > 200 && <p>Decent reading</p>}
 
-        <p>{book.description}</p>
+        <LongText txt={book.description} length={30}/>
 
         <img src={book.thumbnail} alt="" />
 
