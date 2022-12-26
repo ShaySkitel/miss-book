@@ -6,8 +6,11 @@ export const bookService = {
     getById,
     getDefaultFilter,
     getEmptyBook,
+    getEmptyReview,
     save,
-    remove
+    remove,
+    addReview,
+    deleteReview
 }
 
 const STORAGE_KEY = 'booksDB'
@@ -32,12 +35,12 @@ function getById(bookId) {
     return storageService.get(STORAGE_KEY, bookId)
 }
 
-function remove(bookId){
+function remove(bookId) {
     return storageService.remove(STORAGE_KEY, bookId)
 }
 
-function save(book){
-    if(book.id) {
+function save(book) {
+    if (book.id) {
         return storageService.put(STORAGE_KEY, book)
     } else {
         return storageService.post(STORAGE_KEY, book)
@@ -48,8 +51,8 @@ function getDefaultFilter() {
     return { title: '', maxPrice: '' }
 }
 
-function getEmptyBook(){
-    return             {
+function getEmptyBook() {
+    return {
         "title": "",
         "subtitle": "",
         "authors": [],
@@ -65,6 +68,35 @@ function getEmptyBook(){
             "isOnSale": false
         }
     }
+}
+
+function getEmptyReview() {
+    return {
+        fullName: '',
+        rating: '',
+        readAt: ''
+    }
+}
+
+function addReview(bookId, review) {
+    review.id = _makeId(8)
+    return getById(bookId)
+        .then(book => {
+            if (!book.reviews) book.reviews = []
+            book.reviews.unshift(review)
+            return book
+        })
+        .then(book => storageService.put(STORAGE_KEY, book))
+}
+
+function deleteReview(bookId, reviewId) {
+    return getById(bookId)
+        .then(book => {
+            const reviewIdx = book.reviews.findIndex(review => review.id === reviewId)
+            book.reviews.splice(reviewIdx, 1)
+            return book
+        })
+        .then(book => storageService.put(STORAGE_KEY, book))
 }
 
 function _createDemoBooks() {
@@ -514,4 +546,13 @@ function _createDemoBooks() {
         ]
     }
     utilService.saveToStorage(STORAGE_KEY, books)
+}
+
+function _makeId(length = 5) {
+    var txt = ''
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    for (var i = 0; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length))
+    }
+    return txt
 }
