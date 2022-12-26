@@ -1,10 +1,13 @@
 .books-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1em;
 }
 
 .card {
     background-color: var(--clr1bg);
     padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
