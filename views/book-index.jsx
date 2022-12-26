@@ -1,4 +1,5 @@
 const { useEffect, useState } = React
+const {useNavigate} = ReactRouterDOM
 
 import { bookService } from "../services/book.service.js"
 
@@ -9,6 +10,7 @@ import { BookFilter } from "../cmps/book-filter.jsx"
 export function BookIndex() {
 
     const [books, setBooks] = useState([])
+    const navigate = useNavigate()
     const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
 
     useEffect(() => {
@@ -29,6 +31,8 @@ export function BookIndex() {
         <section className="books-filter">
             <BookFilter onSetFilter={onSetFilter} />
         </section>
+
+        <button onClick={() => navigate('/book/edit')}>Add book</button>
 
         <section className="books-container">
             <BookList books={books} onSelectBook={onSelectBook} />

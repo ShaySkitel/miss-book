@@ -1,11 +1,12 @@
 const Router = ReactRouterDOM.HashRouter
 const { Route, Routes } = ReactRouterDOM
 
-import { BookDetails } from './cmps/book-details.jsx'
+import { BookDetails } from './views/book-details.jsx'
 import { MainNav } from './cmps/main-nav.jsx'
 import { About } from './views/about.jsx'
 import { BookIndex } from './views/book-index.jsx'
 import { Home } from './views/home.jsx'
+import { BookEdit } from './views/book-edit.jsx'
 
 export function App() {
     return <Router>
@@ -18,6 +19,7 @@ export function App() {
                     <Route element={<Home />} path='/'></Route>
                     <Route element={<About />} path='/about'></Route>
                     <Route element={<BookIndex />} path='/book'></Route>
+                    <Route element={<BookEdit />} path='/book/edit'></Route>
                     <Route element={<BookDetails />} path='/book/:bookId'></Route>
                 </Routes>
             </main>

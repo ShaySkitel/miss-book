@@ -4,7 +4,7 @@ const {useParams, useNavigate} = ReactRouterDOM
 import { utilService } from "../services/util.service.js"
 import {bookService} from "../services/book.service.js"
 
-import { LongText } from "./long-text.jsx"
+import { LongText } from "../cmps/long-text.jsx"
 
 
 export function BookDetails() {

@@ -4,7 +4,9 @@ import { utilService } from './util.service.js'
 export const bookService = {
     getBooks,
     getById,
-    getDefaultFilter
+    getDefaultFilter,
+    getEmptyBook,
+    save
 }
 
 const STORAGE_KEY = 'booksDB'
@@ -29,8 +31,35 @@ function getById(bookId) {
     return storageService.get(STORAGE_KEY, bookId)
 }
 
+function save(book){
+    if(book.id) {
+        return storageService.put(STORAGE_KEY, book)
+    } else {
+        return storageService.post(STORAGE_KEY, book)
+    }
+}
+
 function getDefaultFilter() {
     return { title: '', maxPrice: '' }
+}
+
+function getEmptyBook(){
+    return             {
+        "title": "",
+        "subtitle": "",
+        "authors": [],
+        "publishedDate": "",
+        "description": "",
+        "pageCount": "",
+        "categories": [],
+        "thumbnail": "",
+        "language": "",
+        "listPrice": {
+            "amount": "",
+            "currencyCode": "",
+            "isOnSale": false
+        }
+    }
 }
 
 function _createDemoBooks() {
