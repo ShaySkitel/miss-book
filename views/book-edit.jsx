@@ -9,7 +9,7 @@ import { BookAdd } from "../cmps/book-add.jsx"
 export function BookEdit() {
 
     const [book, setBook] = useState(bookService.getEmptyBook())
-    const [isAddingManualBook, setIsAddingManualBook] = useState(true)
+    const [isAddingManualBook, setIsAddingManualBook] = useState(false)
     const navigate = useNavigate()
 
     function handleInput({ target }) {
