@@ -8,6 +8,8 @@ import { BookIndex } from './views/book-index.jsx'
 import { Home } from './views/home.jsx'
 import { BookEdit } from './views/book-edit.jsx'
 import { UserMsg } from './cmps/user-msg.jsx'
+import { Team } from './cmps/team.jsx'
+import { Goal } from './cmps/goal.jsx'
 
 export function App() {
     return <Router>
@@ -18,7 +20,10 @@ export function App() {
             <main>
                 <Routes>
                     <Route element={<Home />} path='/'></Route>
-                    <Route element={<About />} path='/about'></Route>
+                    <Route element={<About />} path='/about'>
+                        <Route element={<Team />} path='/about/team'></Route>
+                        <Route element={<Goal />} path='/about/goal'></Route>
+                    </Route>
                     <Route element={<BookIndex />} path='/book'></Route>
                     <Route element={<BookEdit />} path='/book/edit'></Route>
                     <Route element={<BookDetails />} path='/book/:bookId'></Route>
