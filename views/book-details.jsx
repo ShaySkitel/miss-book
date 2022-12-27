@@ -1,5 +1,5 @@
 const { useEffect, useState } = React
-const { useParams, useNavigate } = ReactRouterDOM
+const { useParams, useNavigate, Link } = ReactRouterDOM
 
 import { utilService } from "../services/util.service.js"
 import { bookService } from "../services/book.service.js"
@@ -11,23 +11,27 @@ import { showSuccessMsg } from "../services/event-bus.service.js"
 
 
 export function BookDetails() {
-    const params = useParams()
+    const { bookId } = useParams()
     const navigate = useNavigate()
     const currentYear = utilService.getCurrentYear()
-
+    const [prevBookId, setPrevBookId] = useState(null)
+    const [nextBookId, setnextBookId] = useState(null)
     const [book, setBook] = useState(null)
 
     useEffect(() => {
         loadBook()
-    }, [])
+    }, [bookId])
 
     function loadBook() {
-        bookService.getById(params.bookId)
+        bookService.getById(bookId)
             .then(setBook)
             .catch((err) => {
                 console.log('Had issue in book details ', err)
                 navigate('/book')
             })
+
+        bookService.getPreviousBookId(bookId).then(setPrevBookId)
+        bookService.getNextBookId(bookId).then(setnextBookId)
     }
 
     function onAddReview(book) {
@@ -35,16 +39,18 @@ export function BookDetails() {
     }
 
     function onDeleteReview(reviewId) {
-        bookService.deleteReview(params.bookId, reviewId)
+        bookService.deleteReview(bookId, reviewId)
             .then((book) => {
                 showSuccessMsg('Deleted review')
-                setBook({...book})
+                setBook({ ...book })
             })
     }
 
     if (!book) return <div>Loading...</div>
     return <section className="book-details">
         <button onClick={() => navigate('/book')}>Go back</button>
+        <Link to={`/book/${prevBookId}`}>Previous book</Link>
+        <Link to={`/book/${nextBookId}`}>Next book</Link>
         {book.listPrice.isOnSale && <h2 className="green">ON SALE!</h2>}
         <p>By {book.authors.join(' ')}, language {book.language}, published {book.publishedDate}</p>
 
@@ -62,12 +68,12 @@ export function BookDetails() {
 
         <h3 className={book.listPrice.amount < 20 ? "green" : book.listPrice.amount > 150 ? "red" : ""}>price {book.listPrice.amount} {book.listPrice.currencyCode}</h3>
 
-        <AddReview bookId={params.bookId} onAddReview={onAddReview} />
+        <AddReview bookId={bookId} onAddReview={onAddReview} />
 
         {book.reviews && <section className="reviews">
             {book.reviews.map(review => (
                 <article key={review.id} className="review">
-                    <Review key={review.id} review={review} bookId={params.bookId} onDeleteReview={onDeleteReview} />
+                    <Review key={review.id} review={review} bookId={bookId} onDeleteReview={onDeleteReview} />
                     <button onClick={() => onDeleteReview(review.id)}>Delete</button>
                 </article>
             ))}

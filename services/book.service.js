@@ -10,7 +10,9 @@ export const bookService = {
     save,
     remove,
     addReview,
-    deleteReview
+    deleteReview,
+    getPreviousBookId,
+    getNextBookId
 }
 
 const STORAGE_KEY = 'booksDB'
@@ -45,6 +47,22 @@ function save(book) {
     } else {
         return storageService.post(STORAGE_KEY, book)
     }
+}
+
+function getPreviousBookId(bookId) {
+    return storageService.query(STORAGE_KEY).then(books => {
+        let bookIdx = books.findIndex(book => book.id === bookId)
+        if (bookIdx - 1 < 0) bookIdx = books.length
+        return books[bookIdx - 1].id
+    })
+}
+
+function getNextBookId(bookId) {
+    return storageService.query(STORAGE_KEY).then(books => {
+        let bookIdx = books.findIndex(book => book.id === bookId)
+        if (bookIdx === books.length - 1) bookIdx = -1
+        return books[bookIdx + 1].id
+    })
 }
 
 function getDefaultFilter() {
