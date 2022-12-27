@@ -49,6 +49,8 @@ function save(book) {
     }
 }
 
+
+
 function getPreviousBookId(bookId) {
     return storageService.query(STORAGE_KEY).then(books => {
         let bookIdx = books.findIndex(book => book.id === bookId)

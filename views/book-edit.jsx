@@ -4,9 +4,12 @@ const { useNavigate } = ReactRouterDOM
 import { bookService } from "../services/book.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
+import { BookAdd } from "../cmps/book-add.jsx"
+
 export function BookEdit() {
 
     const [book, setBook] = useState(bookService.getEmptyBook())
+    const [isAddingManualBook, setIsAddingManualBook] = useState(true)
     const navigate = useNavigate()
 
     function handleInput({ target }) {
@@ -40,7 +43,7 @@ export function BookEdit() {
     }
 
     return <section className="book-edit">
-        <form onSubmit={onSaveBook}>
+        {isAddingManualBook && <form onSubmit={onSaveBook}>
             <input required onChange={handleInput} value={book.title} name="title" type="text" placeholder="Book name..." />
             <input required onChange={handleInput} value={book.description} name="description" type="text" placeholder="Description..." />
             <input required onChange={handleInput} value={book.pageCount} name="pageCount" type="number" placeholder="Page count..." />
@@ -49,7 +52,11 @@ export function BookEdit() {
             <input required onChange={handleInput} value={book.categories} name="categories" type="text" placeholder="Categories... (ex. Fantasy,Horror)" />
             <input required onChange={handleInput} value={book.listPrice.amount} name="amount" type="number" placeholder="Book price..." />
             <button>Save</button>
-            <button onClick={() => navigate('/book')} type="button">Go back</button>
-        </form>
+        </form>}
+
+        {!isAddingManualBook && <BookAdd />}
+
+        <button type="button" onClick={() => setIsAddingManualBook((prevIsAddingManualBook) => !prevIsAddingManualBook)}>{isAddingManualBook ? 'Add a book from google' : 'Add a book manually'}</button>
+        <button onClick={() => navigate('/book')} type="button">Go back</button>
     </section>
 }
